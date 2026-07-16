@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("EmployeeDirectory.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+725d32b0253b0c725905316a69db8b5c7ee65771")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+72d9b64d2b76168553c4e253c60a4370fe719136")]
 [assembly: System.Reflection.AssemblyProductAttribute("EmployeeDirectory.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("EmployeeDirectory.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
