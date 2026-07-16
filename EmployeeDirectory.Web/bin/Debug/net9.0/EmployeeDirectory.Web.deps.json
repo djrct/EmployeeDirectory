@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "EmployeeDirectory.Web/1.0.0": {
+        "dependencies": {
+          "EmployeeDirectory.Shared": "1.0.0"
+        },
+        "runtime": {
+          "EmployeeDirectory.Web.dll": {}
+        }
+      },
+      "EmployeeDirectory.Shared/1.0.0": {
+        "runtime": {
+          "EmployeeDirectory.Shared.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "EmployeeDirectory.Web/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "EmployeeDirectory.Shared/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
