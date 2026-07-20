@@ -12,4 +12,12 @@ public class EmployeeDbContext : DbContext
     }
 
     public DbSet<Employee> Employees => Set<Employee>();
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<Employee>()
+            .HasData(SeedData.Employees);
+    }
 }
