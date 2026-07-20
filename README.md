@@ -97,7 +97,7 @@ Default local URLs (from launch settings):
 
 Starter endpoint:
 
-- `GET /WeatherForecast`
+- `GET /EmployeeController`
 
 OpenAPI document is available in Development at:
 
