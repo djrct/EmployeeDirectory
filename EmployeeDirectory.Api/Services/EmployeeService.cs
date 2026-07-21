@@ -20,5 +20,17 @@ namespace EmployeeDirectory.Api.Services
                 .Select(employee => employee.ToDto())
                 .ToList();
         }
+
+        public async Task<EmployeeDto?> GetEmployeeAsync(int id)
+        {
+            var employee = await _employeeRepository.GetByIdAsync(id);
+
+            if (employee is null)
+            {
+                return null;
+            }
+
+            return employee.ToDto();
+        }
     }
 }

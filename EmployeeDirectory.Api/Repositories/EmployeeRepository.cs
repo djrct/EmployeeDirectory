@@ -21,4 +21,11 @@ public class EmployeeRepository : IEmployeeRepository
             .ThenBy(employee => employee.FirstName)
             .ToListAsync();
     }
+
+    public async Task<Employee?> GetByIdAsync(int id)
+    {
+        return await _context.Employees
+            .AsNoTracking()
+            .FirstOrDefaultAsync(e => e.Id == id);
+    }
 }

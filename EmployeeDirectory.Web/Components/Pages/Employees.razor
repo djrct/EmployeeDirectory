@@ -38,7 +38,11 @@ else
             @foreach (var employee in _employees)
             {
                 <tr>
-                    <td>@employee.FirstName @employee.LastName</td>
+                    <td>
+                        <a href="/employees/@employee.Id">
+                            @employee.FirstName @employee.LastName
+                        </a>
+                    </td>
                     <td>@employee.Department</td>
                     <td>@employee.Title</td>
                     <td>@employee.Location</td>
