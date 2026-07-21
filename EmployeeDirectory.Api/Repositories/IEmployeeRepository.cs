@@ -1,0 +1,8 @@
+using EmployeeDirectory.Api.Data.Entities;
+
+namespace EmployeeDirectory.Api.Repositories;
+
+public interface IEmployeeRepository
+{
+    Task<IReadOnlyList<Employee>> GetAllAsync();
+}
