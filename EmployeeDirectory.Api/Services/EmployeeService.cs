@@ -1,28 +1,24 @@
-using EmployeeDirectory.Api.Data;
 using EmployeeDirectory.Api.Mappings;
+using EmployeeDirectory.Api.Repositories;
 using EmployeeDirectory.Shared.DTOs;
-using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeDirectory.Api.Services
 {
     public class EmployeeService : IEmployeeService
     {
-        private readonly EmployeeDbContext _context;
+        private readonly IEmployeeRepository _employeeRepository;
 
-        public EmployeeService(EmployeeDbContext context)
+        public EmployeeService(IEmployeeRepository employeeRepository)
         {
-            _context = context;
+            _employeeRepository = employeeRepository;
         }
 
         public async Task<IReadOnlyList<EmployeeDto>> GetEmployeesAsync()
         {
-            var employees = await _context.Employees
-                .AsNoTracking()
-                .OrderBy(employee => employee.LastName)
-                .ThenBy(employee => employee.FirstName)
+            var employees = await _employeeRepository.GetAllAsync();
+            return employees
                 .Select(employee => employee.ToDto())
-                .ToListAsync();
-            return employees;
+                .ToList();
         }
     }
 }

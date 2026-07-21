@@ -1,7 +1,6 @@
-using EmployeeDirectory.Api.Data;
-using EmployeeDirectory.Api.Mappings;
+using EmployeeDirectory.Api.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using EmployeeDirectory.Shared.DTOs;
 
 namespace EmployeeDirectory.Api.Controllers;
 
@@ -9,21 +8,18 @@ namespace EmployeeDirectory.Api.Controllers;
 [Route("api/[controller]")]
 public class EmployeeController : ControllerBase
 {
-    private readonly EmployeeDbContext _context;
+    private readonly IEmployeeService _employeeService;
 
-    public EmployeeController(EmployeeDbContext context)
+    public EmployeeController(IEmployeeService employeeService)
     {
-        _context = context;
+        _employeeService = employeeService;
     }
 
     [HttpGet]
     public async Task<IActionResult> GetEmployees()
     {
-        var employees = await _context.Employees
-            .OrderBy(e => e.LastName)
-            .ThenBy(e => e.FirstName)
-            .ToListAsync();
+        var employees = await _employeeService.GetEmployeesAsync();
 
-        return Ok(employees.Select(e => e.ToDto()));
+        return Ok(employees);
     }
 }
