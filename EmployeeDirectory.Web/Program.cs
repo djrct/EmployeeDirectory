@@ -1,10 +1,20 @@
 using EmployeeDirectory.Web.Components;
+using EmployeeDirectory.Web.Clients;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+var apiBaseUrl = builder.Configuration["ApiSettings:BaseUrl"]
+    ?? throw new InvalidOperationException(
+        "ApiSettings:BaseUrl is not configured.");
+
+builder.Services.AddHttpClient<IEmployeeApiClient, EmployeeApiClient>(client =>
+{
+    client.BaseAddress = new Uri(apiBaseUrl);
+});
 
 var app = builder.Build();
 
