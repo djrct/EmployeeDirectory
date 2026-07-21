@@ -15,4 +15,14 @@ public sealed class EmployeeApiClient(HttpClient httpClient)
 
         return employees ?? [];
     }
+
+    public async Task<EmployeeDto?> GetEmployeeAsync(
+        int id,
+        CancellationToken cancellationToken = default)
+    {
+        var employee = await httpClient.GetFromJsonAsync<EmployeeDto>(
+            $"api/employee/{id}",
+            cancellationToken);
+        return employee;
+    }
 }

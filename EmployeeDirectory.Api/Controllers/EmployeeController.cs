@@ -22,4 +22,17 @@ public class EmployeeController : ControllerBase
 
         return Ok(employees);
     }
+
+    [HttpGet("{id:int}")]
+    public async Task<IActionResult> GetEmployee(int id)
+    {
+        var employee = await _employeeService.GetEmployeeAsync(id);
+
+        if (employee is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(employee);
+    }
 }
