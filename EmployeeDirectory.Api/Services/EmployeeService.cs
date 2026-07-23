@@ -32,5 +32,14 @@ namespace EmployeeDirectory.Api.Services
 
             return employee.ToDto();
         }
+
+        public async Task<EmployeeDto> CreateEmployeeAsync(CreateEmployeeDto employeeDto)
+        {
+            var employee = employeeDto.ToEntity();
+
+            var createdEmployee = await _employeeRepository.AddAsync(employee);
+
+            return createdEmployee.ToDto();
+        }
     }
 }

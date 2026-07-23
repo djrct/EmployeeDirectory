@@ -1,0 +1,210 @@
+@page "/employees/create"
+
+@implements IDisposable
+
+@using EmployeeDirectory.Shared.DTOs
+@using EmployeeDirectory.Web.Clients
+@inject IEmployeeApiClient EmployeeApiClient
+@inject NavigationManager NavigationManager
+
+
+<PageTitle>Create Employee</PageTitle>
+
+<h1>Create Employee</h1>
+
+<div class="card">
+    <div class="card-body">
+        <!-- connects the validation attributes from CreateEmployeeDto to the form -->
+        <EditForm Model="_employee" OnValidSubmit="HandleValidSubmit">
+            <DataAnnotationsValidator/>
+
+            @if (!string.IsNullOrWhiteSpace(_errorMessage))
+            {
+                <div class="alert alert-danger" role="alert">
+                    @_errorMessage
+                </div>
+            }
+
+            <ValidationSummary/>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="firstName" class="form-label">
+                        First name
+                    </label>
+
+                    <InputText id="firstName"
+                               class="form-control"
+                               @bind-Value="_employee.FirstName"/>
+
+                    <ValidationMessage For="@(() => _employee.FirstName)"/>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="lastName" class="form-label">
+                        Last name
+                    </label>
+
+                    <InputText id="lastName"
+                               class="form-control"
+                               @bind-Value="_employee.LastName"/>
+
+                    <ValidationMessage For="@(() => _employee.LastName)"/>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">
+                    Email
+                </label>
+
+                <InputText id="email"
+                           type="email"
+                           class="form-control"
+                           @bind-Value="_employee.Email"/>
+
+                <ValidationMessage For="@(() => _employee.Email)"/>
+            </div>
+
+            <div class="mb-3">
+                <label for="phoneNumber" class="form-label">
+                    Phone number
+                </label>
+
+                <InputText id="phoneNumber"
+                           type="tel"
+                           class="form-control"
+                           @bind-Value="_employee.PhoneNumber"/>
+
+                <ValidationMessage For="@(() => _employee.PhoneNumber)"/>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="department" class="form-label">
+                        Department
+                    </label>
+
+                    <InputText id="department"
+                               class="form-control"
+                               @bind-Value="_employee.Department"/>
+
+                    <ValidationMessage For="@(() => _employee.Department)"/>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="title" class="form-label">
+                        Title
+                    </label>
+
+                    <InputText id="title"
+                               class="form-control"
+                               @bind-Value="_employee.Title"/>
+
+                    <ValidationMessage For="@(() => _employee.Title)"/>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="location" class="form-label">
+                        Location
+                    </label>
+
+                    <InputText id="location"
+                               class="form-control"
+                               @bind-Value="_employee.Location"/>
+
+                    <ValidationMessage For="@(() => _employee.Location)"/>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label for="hireDate" class="form-label">
+                        Hire date
+                    </label>
+
+                    <InputDate id="hireDate"
+                               class="form-control"
+                               @bind-Value="_employee.HireDate"/>
+
+                    <ValidationMessage For="@(() => _employee.HireDate)"/>
+                </div>
+            </div>
+
+            <div class="form-check mb-4">
+                <InputCheckbox id="isActive"
+                               class="form-check-input"
+                               @bind-Value="_employee.IsActive"/>
+
+                <label for="isActive" class="form-check-label">
+                    Active employee
+                </label>
+            </div>
+
+            <button type="submit"
+                    class="btn btn-primary"
+                    disabled="@_isSaving">
+                @(_isSaving ? "Saving..." : "Create employee")
+            </button>
+
+            <button type="button"
+                    class="btn btn-outline-secondary ms-2"
+                    disabled="@_isSaving"
+                    @onclick="Cancel">
+                Cancel
+            </button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    private readonly Guid _instanceId = Guid.NewGuid();
+
+    private readonly CreateEmployeeDto _employee = new()
+    {
+        HireDate = DateTime.Today,
+        IsActive = true
+    };
+
+    private bool _isSaving;
+    private string? _errorMessage;
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine($"CreateEmployee initialized: {_instanceId}");
+    }
+
+    public void Dispose()
+    {
+        Console.WriteLine($"CreateEmployee disposed: {_instanceId}");
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        _isSaving = true;
+        _errorMessage = null;
+
+        try
+        {
+            var createdEmployee =
+                await EmployeeApiClient.CreateEmployeeAsync(_employee);
+
+            NavigationManager.NavigateTo(
+                $"/employees/{createdEmployee.Id}");
+        }
+        catch (HttpRequestException)
+        {
+            _errorMessage =
+                "The employee could not be created. Please try again.";
+        }
+        finally
+        {
+            _isSaving = false;
+        }
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/employees");
+    }
+}

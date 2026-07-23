@@ -7,5 +7,7 @@ namespace EmployeeDirectory.Api.Services
         Task<IReadOnlyList<EmployeeDto>> GetEmployeesAsync();
 
         Task<EmployeeDto?> GetEmployeeAsync(int id);
+
+        Task<EmployeeDto> CreateEmployeeAsync(CreateEmployeeDto employee);
     }
 }
