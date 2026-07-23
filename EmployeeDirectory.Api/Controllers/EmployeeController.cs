@@ -35,4 +35,16 @@ public class EmployeeController : ControllerBase
 
         return Ok(employee);
     }
+
+    [HttpPost]
+    public async Task<ActionResult<EmployeeDto>> CreateEmployee([FromBody] CreateEmployeeDto employeeDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        var createdEmployee = await _employeeService.CreateEmployeeAsync(employeeDto);
+
+        return CreatedAtAction(nameof(GetEmployee), new { id = createdEmployee.Id }, createdEmployee);
+    }
 }

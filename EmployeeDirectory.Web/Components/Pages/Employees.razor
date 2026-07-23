@@ -5,7 +5,13 @@
 
 <PageTitle>Employees</PageTitle>
 
-<h1>Employees</h1>
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="mb-0">Employees</h1>
+
+    <a class="btn btn-primary" href="/employees/create">
+        Add employee
+    </a>
+</div>
 
 @if (_isLoading)
 {

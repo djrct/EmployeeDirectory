@@ -28,4 +28,11 @@ public class EmployeeRepository : IEmployeeRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(e => e.Id == id);
     }
+    public async Task<Employee> AddAsync(Employee employee)
+    {
+        _context.Employees.Add(employee);
+        await _context.SaveChangesAsync();
+
+        return employee;
+    }
 }
